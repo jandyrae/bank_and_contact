@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string> 
 #include <iostream>
-#include <memory>
-
+ 
 using namespace std;
 
 class Contact {
@@ -13,11 +12,17 @@ private:
 	string state;
 	string zip_code;
 	string phone_number;
-	// shared_ptr<Contact> pointer;
-
+	
 public:
 	Contact();
 	Contact(string address, string city, string state, string zip_code, string phone_number);
-	void contact_info(string address, string city, string state, string zip_code, string phone_number);
-	void display_contact_info(string address, string city, string state, string zip_code, string phone_number);
+	
+	string get_address() const;
+	string get_city() const;
+	string get_state() const;
+	string get_zip() const;
+	string get_phone() const;
+
+	void enter_contact();
+	void display_contact_info() const;
 };

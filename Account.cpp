@@ -2,10 +2,9 @@
 
 int Account::next_ID = 0;
 
-// default constructor
-Account::Account() : account_ID{ 0 }, account_name{ "" }, account_balance{ 0.0f } {}
-// alt constructor
-Account::Account(int id, string name, float balance) : account_ID(next_ID), account_name(name), account_balance(balance) {}
+Account::Account() : account_ID{ 0 }, account_name{ "" }, account_balance{ 0.0f }, pContact( nullptr ) {}
+Account::Account(int id, string name, float balance) : account_ID(next_ID), account_name(name), account_balance(balance), pContact(nullptr)
+{}
 
 int Account::get_id()
 {
@@ -19,7 +18,7 @@ float Account::get_balance()
 
 void Account::account_info()
 {
-	cout << "Enter the name: ";
+	cout << "\nEnter the name: ";
 	cin >> account_name;
 	cout << endl << "Enter the balance: ";
 	cin >> account_balance;
@@ -32,26 +31,26 @@ void Account::account_display() const
 	cout.setf(ios::showpoint);
 	cout << setprecision(2);
 	cout << endl << "Account ID : " << account_ID << "   Name: " << account_name << "   Balance: $" << account_balance << endl;
+	if (pContact != nullptr)
+	{
+		pContact->display_contact_info();
+	}
 }
 
 void Account::account_deposit(float deposit)
 {
-	cout << "Amount to deposit: $";
-	cin >> deposit;
 	account_balance += deposit;
 }
 
 void Account::account_withdrawl(float withdrawl)
 {
-	cout << "Amount to withdraw: $";
-	cin >> withdrawl;
 	account_balance -= withdrawl;
 }
 
 void Account::account_create(list<Account>& account_list)
 {
-	Account account(account_ID, account_name, account_balance); // create an Account object
-	account_list.push_back(account); // push new obj account to list
+	Account account(account_ID, account_name, account_balance);
+	account_list.push_back(account); 
 }
 
 void Account::display_account_list(list<Account>& account_list)
@@ -66,3 +65,10 @@ void Account::update_balance(float new_balance)
 {
 	account_balance = new_balance;
 }
+
+void Account::add_contact()
+{
+	pContact = std::make_shared<Contact>();
+	pContact->enter_contact();
+}
+

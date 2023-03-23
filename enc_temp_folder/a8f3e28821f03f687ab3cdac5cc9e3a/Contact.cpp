@@ -42,7 +42,7 @@ void Contact::enter_contact()
 	cout << "\nPhone number: ";
 	cin >> phone_number;
 	cout << endl;
-	address = street_num + " Avenue " + street_name;
+	address = street_num + " " + street_name;
 }
 
 void Contact::display_contact_info() const

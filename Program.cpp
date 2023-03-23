@@ -14,24 +14,21 @@ using namespace std;
 
 void display_options();
 list<Account>::iterator find_by_id(list<Account>& account_list, int account_ID);
+float prompt_for_float(string prompt);
 void remove_account(list<Account>& account_list, int account_ID);
 void banks_total_balance(list<Account>& account_list, float account_balance);
-void apply_to_balance(list<Account>& account_list);
-//void banks_dividend(list<Account>& account_list, float dividend, float get_bal);
 
 int main()
 {
 	int option, id;
 	string name = "";
 	string addr, city, state, zip, phone_num;
-	float deposit{}, withdrawl{}, balance{};
-	float dividend{};
+	float deposit{}, withdrawl{}, balance{}, dividend{};
 	bool open_transaction = true;
 	Account account;
 	Contact contact;
 	list<Account> accounts;
 	list<Account>::iterator it;
-	float current_bal = 1.0f;
 
 	while (open_transaction) {
 		display_options();
@@ -53,7 +50,7 @@ int main()
 				cout << "\n-----------------\n";
 			};
 			account.display_account_list(accounts);
-			contact.display_contact_info(addr, city, state, zip, phone_num);
+			//contact.display_contact_info();
 			break;
 
 		case 2:
@@ -61,6 +58,8 @@ int main()
 			cout << "What account ID do you want to deposit into? ";
 			cin >> id;
 			it = find_by_id(accounts, id);
+			cout << "Amount to deposit: $";
+			cin >> deposit;
 			if (it != accounts.end())
 			{
 				it->account_deposit(deposit);
@@ -76,6 +75,8 @@ int main()
 			cout << "What account ID do you want to withdraw from? ";
 			cin >> id;
 			it = find_by_id(accounts, id);
+			cout << "Amount to withdraw: $";
+			cin >> withdrawl;
 			if (it != accounts.end())
 			{
 				it->account_withdrawl(withdrawl);
@@ -94,7 +95,6 @@ int main()
 
 		case 5:
 			// option '5' - Program should find an account by its id
-			// int id;
 			cout << "What account ID do you want to display? ";
 			cin >> id;
 			it = find_by_id(accounts, id);
@@ -127,7 +127,11 @@ int main()
 		case 8:
 			// option '8' - Program should add a dividend to all of the accounts
 			cout << "------------------\n";
-			apply_to_balance(accounts);
+			dividend = prompt_for_float("Enter a dividend as a whole number: ");
+			dividend /= 100;
+			transform(accounts.begin(), accounts.end(), accounts.begin(), [dividend, account](auto& account_bal) 
+				{ account_bal.account_deposit(account_bal.get_balance() * dividend); return account_bal; });
+			cout << "\n*** Dividend added ***\n";
 			break;
 		
 		case 9:
@@ -139,7 +143,7 @@ int main()
 			{
 				cout << "------------------\n";
 				it->account_display();
-				contact.contact_info(addr, city, state, zip, phone_num);
+				it->add_contact();
 			}
 			else
 			{
@@ -201,16 +205,9 @@ void banks_total_balance(list<Account>& account_list, float account_balance)
 	cout << "The total balance at the bank is $ " << bank_balance;
 }
 
+float prompt_for_float(string prompt) {
+	cout << prompt;
+	cin >> prompt;
+	return stof(prompt);
+}
 
-void apply_to_balance(list<Account>& account_list) {
-	cout << "------------------\n";
-	cout << "Enter a dividend as a percentage: ";
-	float dividend = 1.0f;
-	cin >> dividend;
-	dividend /= 100;
-	for_each(account_list.begin(), account_list.end(), [dividend](auto& acct)
-		{
-			float new_balance = acct.get_balance() * (1 + dividend);
-			acct.update_balance(new_balance);
-		});
-};

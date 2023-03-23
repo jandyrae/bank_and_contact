@@ -5,8 +5,11 @@
 #include <iomanip>
 #include <list>
 #include <algorithm>
+#include <memory>
+#include "Contact.h"
 
 using namespace std;
+using std::shared_ptr;
 
 class Account {
 private:
@@ -14,6 +17,7 @@ private:
 	string account_name;
 	float account_balance;
 	static int next_ID;
+	std::shared_ptr<Contact> pContact;
 
 public:
 	Account();
@@ -27,4 +31,6 @@ public:
 	void account_create(list<Account>& account_list);
 	void display_account_list(list<Account>& account_list);
 	void update_balance(float new_balance);
+	void add_contact(void);
+
 };
