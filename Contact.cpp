@@ -47,10 +47,10 @@ void Contact::enter_contact()
 
 void Contact::display_contact_info() const
 {
-	cout << "Contact information:\t";
-	cout << address << ",\n";
-	cout << city << ", " << state << " " << zip_code << "\n";
-	cout << "(" << phone_number.substr(0, 3) << ")"
+	cout << "Contact information:\n";
+	cout << "\t\t\t" << address << ",\n";
+	cout << "\t\t\t" << city << ", " << state << " " << zip_code << "\n";
+	cout << "\t\t\t" << "(" << phone_number.substr(0, 3) << ")"
 		<< phone_number.substr(3, 3) << "-" << phone_number.substr(6, 4) << "\n";
 	}
 
