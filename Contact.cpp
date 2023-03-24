@@ -42,13 +42,15 @@ void Contact::enter_contact()
 	cout << "\nPhone number: ";
 	cin >> phone_number;
 	cout << endl;
-	address = street_num + " Avenue " + street_name;
+	address = street_num + " " + street_name + " Avenue/Street";
 }
 
 void Contact::display_contact_info() const
 {
+	cout << "Contact information:\t";
 	cout << address << ",\n";
 	cout << city << ", " << state << " " << zip_code << "\n";
-	cout << phone_number;
-}
+	cout << "(" << phone_number.substr(0, 3) << ")"
+		<< phone_number.substr(3, 3) << "-" << phone_number.substr(6, 4) << "\n";
+	}
 

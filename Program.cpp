@@ -50,7 +50,6 @@ int main()
 				cout << "\n-----------------\n";
 			};
 			account.display_account_list(accounts);
-			//contact.display_contact_info();
 			break;
 
 		case 2:
